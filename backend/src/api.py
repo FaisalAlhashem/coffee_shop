@@ -30,6 +30,22 @@ CORS(app)
 '''
 
 
+@app.route('/drinks', methods=['GET'])
+def get_drinks():
+    unfiltered_drinks = Drink.query.all()
+    drinks = []
+    for drink in unfiltered_drinks:
+        drink = drink.short()
+        drinks.append(drink)
+    if len(drinks) == 0:
+        abort(404)
+
+    return jsonify({
+        'success': True,
+        'drinks': drinks
+    })
+
+
 '''
 @TODO implement endpoint
     GET /drinks-detail

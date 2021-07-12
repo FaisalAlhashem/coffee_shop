@@ -5,7 +5,8 @@ import json
 
 database_filename = "database.db"
 project_dir = os.path.dirname(os.path.abspath(__file__))
-database_path = "sqlite:///{}".format(os.path.join(project_dir, database_filename))
+database_path = "sqlite:///{}".format(
+    os.path.join(project_dir, database_filename))
 
 db = SQLAlchemy()
 
@@ -39,9 +40,9 @@ def db_drop_and_create_all():
         recipe='[{"name": "water", "color": "blue", "parts": 1}]'
     )
 
-
-drink.insert()
+    drink.insert()
 # ROUTES
+
 
 '''
 Drink
@@ -65,7 +66,8 @@ class Drink(db.Model):
 
     def short(self):
         print(json.loads(self.recipe))
-        short_recipe = [{'color': r['color'], 'parts': r['parts']} for r in json.loads(self.recipe)]
+        short_recipe = [{'color': r['color'], 'parts': r['parts']}
+                        for r in json.loads(self.recipe)]
         return {
             'id': self.id,
             'title': self.title,
