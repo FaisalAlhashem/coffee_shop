@@ -190,4 +190,4 @@ def auth_failed(error):
         'success': False,
         'error': error.status_code,
         'message': error.error
-    })
+    }), error.status_code

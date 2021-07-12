@@ -24,18 +24,7 @@ class AuthError(Exception):
 
 # Auth Header
 
-'''
-@TODO implement get_token_auth_header() method
-    it should attempt to get the header from the request
-        it should raise an AuthError if no header is present
-    it should attempt to split bearer and the token
-        it should raise an AuthError if the header is malformed
-    return the token part of the header
-'''
-
 # this method get the authorization token and checks if it has the required parameters like the bearer part
-
-
 def get_token_auth_header():
     auth = request.headers.get('Authorization', None)
     if not auth:
@@ -67,18 +56,7 @@ def get_token_auth_header():
     token = parts[1]
     return token
 
-
-'''
-@TODO implement check_permissions(permission, payload) method
-    @INPUTS
-        permission: string permission (i.e. 'post:drink')
-        payload: decoded jwt payload
-
-    it should raise an AuthError if permissions are not included in the payload
-        !!NOTE check your RBAC settings in Auth0
-    it should raise an AuthError if the requested permission string is not in the payload permissions array
-    return true otherwise
-'''
+# checks if the given payload has the required permissions
 
 
 def check_permissions(permission, payload):
@@ -96,22 +74,10 @@ def check_permissions(permission, payload):
     return True
 
 
-'''
-@TODO implement verify_decode_jwt(token) method
-    @INPUTS
-        token: a json web token (string)
-
-    it should be an Auth0 token with key id (kid)
-    it should verify the token using Auth0 /.well-known/jwks.json
-    it should decode the payload from the token
-    it should validate the claims
-    return the decoded payload
-
-    !!NOTE urlopen has a common certificate error described here: https://stackoverflow.com/questions/50236117/scraping-ssl-certificate-verify-failed-error-for-http-en-wikipedia-org
-'''
-
-
 def verify_decode_jwt(token):
+    # verfies if the jwt is a valid token
+    # might need to run the certificates script inside your python folder
+    # for it to work correctly
     jsonurl = urlopen(f'https://{AUTH0_DOMAIN}/.well-known/jwks.json')
     jwks = json.loads(jsonurl.read())
     unverified_header = jwt.get_unverified_header(token)
